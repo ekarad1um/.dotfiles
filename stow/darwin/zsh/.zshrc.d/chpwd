@@ -1,0 +1,17 @@
+autoload -Uz add-zsh-hook
+
+__chpwd_python_hook__() {
+  if [[ -f ".venv/bin/activate" ]]; then
+    source .venv/bin/activate
+  fi
+}
+
+__chpwd_nvm_hook__() {
+  if command -v nvm > /dev/null 2>&1 && [[ -f ".nvmrc" ]]; then
+    nvm use
+  fi
+}
+
+add-zsh-hook chpwd __chpwd_python_hook__
+add-zsh-hook chpwd __chpwd_nvm_hook__
+add-zsh-hook chpwd function() { ls }

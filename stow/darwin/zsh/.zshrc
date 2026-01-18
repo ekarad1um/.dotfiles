@@ -11,20 +11,28 @@ setopt EXTENDED_GLOB
 setopt APPEND_HISTORY
 setopt HIST_SAVE_NO_DUPS
 
+# set the prompt string
+PROMPT='%B%F{250}%2~%f%b ${vcs_info_msg_0_}%(?.%F{green}%#.%F{red}(%?%) %#)%f '
+
+# use emacs keybindings
+bindkey -e
+
 # enable version control information
 autoload -Uz vcs_info
-
-# set the format for the git branch information
 zstyle ':vcs_info:git:*' formats '[%b] '
-
-# update the prompt with the current git branch information
 precmd() {
   vcs_info
 }
 setopt PROMPT_SUBST
 
-# set the prompt string
-PROMPT='%B%F{250}%2~%f%b ${vcs_info_msg_0_}%(?.%F{green}%#.%F{red}(%?%) %#)%f '
+# enable edit command buffer
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
+
+# enable magic space
+autoload -Uz magic-space
+bindkey ' ' magic-space
 
 # add user local bin directories to PATH
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin" ]]; then
