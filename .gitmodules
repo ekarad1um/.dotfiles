@@ -10,3 +10,6 @@
 [submodule "stow/common/tmux/.tmux/plugins/tmux-resurrect"]
 	path = stow/common/tmux/.tmux/plugins/tmux-resurrect
 	url = https://github.com/tmux-plugins/tmux-resurrect
+[submodule "stow/common/tmux/.tmux/plugins/tmux-open"]
+	path = stow/common/tmux/.tmux/plugins/tmux-open
+	url = https://github.com/tmux-plugins/tmux-open
