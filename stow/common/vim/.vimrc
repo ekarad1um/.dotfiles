@@ -28,8 +28,8 @@ autocmd FocusLost * silent! wall
 " use W to save file as root
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
-" disable tab line
-set showtabline=0
+" autohide tab line
+set showtabline=1
 
 " set scrolloff when using j/k
 set so=7
@@ -139,4 +139,27 @@ set statusline+=\ %l\/%L
 set statusline+=\ %v%{VisualSelectionSize()}
 set statusline+=\ 0x%04B
 set statusline+=\ \[%{&fileencoding}\]
-set statusline+=\ %{tabpagenr()}\#%{tabpagenr('$')}
+
+" tab line style
+function! MyTabLine()
+  let s = ''
+  for i in range(tabpagenr('$'))
+    let s .= i + 1 == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
+    let s .= '%' . (i + 1) . 'T'
+    let s .= '[' . (i + 1) . ':%{MyTabLabel(' . (i + 1) . ')}] '
+  endfor
+  let s .= '%#TabLineFill#%T'
+  return s
+endfunction
+function! MyTabLabel(n)
+  let buflist = tabpagebuflist(a:n)
+  let winnr = tabpagewinnr(a:n)
+  let bufnr = buflist[winnr - 1]
+  let name = bufname(bufnr)
+  let label = empty(name) ? 'No Name' : fnamemodify(name, ':t')
+  if getbufvar(bufnr, '&modified')
+    let label .= '+'
+  endif
+  return label
+endfunction
+set tabline=%!MyTabLine()

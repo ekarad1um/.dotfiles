@@ -15,14 +15,33 @@ end
 vim.api.nvim_set_hl(0, 'StatusLine', { fg = '#eeeeee', bg = 'none' })
 vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = '#888888', bg = 'none' })
 
+-- Set tab line colors
+vim.api.nvim_set_hl(0, 'TabLineSel', { fg = 'black', bg = 'none', bold = true })
+vim.api.nvim_set_hl(0, 'TabLine', { fg = 'black', bg = 'none' })
+vim.api.nvim_set_hl(0, 'TabLineFill', { fg = 'none', bg = '#eeeeee' })
+
 -- Hide command line unless needed
 vim.opt.cmdheight = 0
 
 -- Set netrw lexplore keymap
 vim.keymap.set('n', '<M-e>', vim.cmd.Lexplore)
 
--- List all tabs
+-- Tab management keymaps
 vim.keymap.set('n', '<M-Tab>', ':tabs<CR>')
+vim.keymap.set('n', '<M-w>', function()
+  if #vim.api.nvim_list_tabpages() == 1 then
+    vim.cmd('quit')
+  else
+    vim.cmd('tabclose')
+  end
+end)
+vim.keymap.set('n', '<M-n>', ':tabnew<CR>')
+
+-- Keymaps to switch to specific tabs
+for i = 1, 9 do
+  vim.keymap.set('n', '<M-' .. i .. '>', i .. 'gt')
+end
+vim.keymap.set('n', '<M-0>', ':tablast<CR>')
 
 -- Remap Emacs-style keybindings command modes
 -- Navigation
