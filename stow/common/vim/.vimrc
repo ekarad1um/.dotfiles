@@ -4,6 +4,10 @@ set history=500
 " enable true color support
 set termguicolors
 
+" set splits to open below and to the right
+set splitbelow
+set splitright
+
 " set transparent background
 augroup TransparentBackground
   autocmd!

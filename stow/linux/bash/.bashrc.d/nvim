@@ -1,0 +1,11 @@
+nvim() {
+  if [ -n "$NVIM" ]; then
+    if [ -z "$1" ]; then
+      return
+    fi
+    local file=$(readlink -f "$1")
+    command nvim --server "$NVIM" --remote-send "<C-\><C-n>:drop $file<CR>"
+  else
+    command nvim "$@"
+  fi
+}
