@@ -22,6 +22,7 @@ vim.api.nvim_set_hl(0, 'TabLineFill', { fg = 'none', bg = '#eeeeee' })
 
 -- Hide command line unless needed
 vim.opt.cmdheight = 0
+vim.opt.showcmd = true
 
 -- Set netrw lexplore keymap
 vim.keymap.set('n', '<M-e>', vim.cmd.Lexplore)
@@ -92,6 +93,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.shortmess:append("c")
 vim.opt.completeopt:append("fuzzy")
+
+-- Toggle inlay hints
+vim.keymap.set('n', '<Leader>ih', function()
+  local is_enabled = vim.lsp.inlay_hint.is_enabled()
+  vim.lsp.inlay_hint.enable(not is_enabled)
+end)
+
+-- Rename symbol keymap
+vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename)
+
+-- Format document keymap
+vim.keymap.set('n', '<Leader>f', function()
+  vim.lsp.buf.format({ async = true })
+end)
 
 -- Configure nvim treesitter to install parsers (https://github.com/nvim-treesitter/nvim-treesitter)
 require('nvim-treesitter').install({
