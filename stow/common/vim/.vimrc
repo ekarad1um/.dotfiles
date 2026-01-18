@@ -67,6 +67,7 @@ set autoindent
 
 " enable line numbers
 set number
+set relativenumber
 
 " enable mouse support
 set mouse=a
