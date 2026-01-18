@@ -75,6 +75,8 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Terminal mode keymaps
+vim.keymap.set('n', '<M-t>', ':vsp|term<CR>')
+vim.keymap.set('t', '<M-w>', [[<C-\><C-n>:q!<CR>]], { noremap = true })
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { noremap = true })
 vim.keymap.set('t', '<C-h>', [[<C-\><C-n><C-w>h]], { noremap = true })
 vim.keymap.set('t', '<C-j>', [[<C-\><C-n><C-w>j]], { noremap = true })
