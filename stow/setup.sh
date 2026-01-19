@@ -5,6 +5,9 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "$0" )" &> /dev/null && pwd )"
 
 ls "$SCRIPT_DIR/common" | xargs -I {} stow -d "$SCRIPT_DIR/common" -t "$HOME" --restow {}
 
+rm -fr "$HOME/.rc.d"
+ln -s "$SCRIPT_DIR/rc.d" "$HOME/.rc.d"
+
 case "$( uname -s )" in
   Linux*)
     ls "$SCRIPT_DIR/linux" | xargs -I {} stow -d "$SCRIPT_DIR/linux" -t "$HOME" --restow {}

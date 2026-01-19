@@ -102,6 +102,14 @@ if [[ -d "$HOME/.bashrc.d" ]]; then
   done
   unset __RC
 fi
+if [[ -d "$HOME/.rc.d" ]]; then
+  for __RC in "$HOME/.rc.d"/*; do
+    if [[ -f "$__RC" ]]; then
+      . "$__RC"
+    fi
+  done
+  unset __RC
+fi
 
 # start a tmux session if not already inside one
 if command -v "tmux" > /dev/null 2>&1 && [[ -z "$SSH_CONNECTION" ]] && [[ ! "$TERM_PROGRAM" =~ "(vscode|zed)" ]]; then

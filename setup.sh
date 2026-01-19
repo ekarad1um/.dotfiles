@@ -94,3 +94,5 @@ do_setup
 
 unset ORDERED_SETUP_DIRS
 unset IGNORED_SETUP_DIRS
+
+exit 0
