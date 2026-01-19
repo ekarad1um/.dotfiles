@@ -168,3 +168,6 @@ function! MyTabLabel(n)
   return label
 endfunction
 set tabline=%!MyTabLine()
+
+" auto escape mouse when leaving vim
+autocmd VimLeave * set mouse=
