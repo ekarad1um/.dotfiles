@@ -29,6 +29,7 @@ vim.keymap.set('n', '<M-e>', vim.cmd.Lexplore)
 
 -- Tab management keymaps
 vim.keymap.set('n', '<M-Tab>', ':tabs<CR>')
+vim.keymap.set('n', '<M-n>', ':tabnew<CR>')
 vim.keymap.set('n', '<M-w>', function()
   if #vim.api.nvim_list_tabpages() == 1 then
     vim.cmd('quit')
@@ -36,7 +37,6 @@ vim.keymap.set('n', '<M-w>', function()
     vim.cmd('tabclose')
   end
 end)
-vim.keymap.set('n', '<M-n>', ':tabnew<CR>')
 
 -- Keymaps to switch to specific tabs
 for i = 1, 9 do
