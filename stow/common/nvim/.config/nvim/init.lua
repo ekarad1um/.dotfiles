@@ -134,7 +134,7 @@ end)
 vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename)
 
 -- Format document keymap
-vim.keymap.set('n', '<Leader>f', function()
+vim.keymap.set('n', '<Leader>lf', function()
   vim.lsp.buf.format({ async = true })
 end)
 
