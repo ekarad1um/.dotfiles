@@ -44,15 +44,15 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Hex mode toggle keymap
 vim.keymap.set("n", "<leader>h", function()
-  if vim.b.is_hex then
-    vim.cmd("%!xxd -r")
-    vim.b.is_hex = false
-    vim.opt_local.binary = false
-  else
-    vim.opt_local.binary = true
-    vim.cmd("%!xxd")
-    vim.b.is_hex = true
-  end
+    if vim.b.is_hex then
+        vim.cmd("%!xxd -r")
+        vim.b.is_hex = false
+        vim.opt_local.binary = false
+    else
+        vim.opt_local.binary = true
+        vim.cmd("%!xxd")
+        vim.b.is_hex = true
+    end
 end, { noremap = true })
 
 -- Auto enter insert mode when opening or switching to a terminal buffer
@@ -111,20 +111,25 @@ vim.keymap.set('n', '<leader>f', function()
     vim.lsp.buf.format({ async = true })
 end, { noremap = true })
 
+-- Configure diagnostic display settings
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    severity_sort = true,
+})
+
 -- Show diagnostics keybindings
+vim.keymap.set("n", "<leader>d", function()
+    local current_config = vim.diagnostic.config() or {}
+    local new_state = not (current_config.virtual_text ~= false)
+    vim.diagnostic.config({ virtual_text = new_state })
+end, { noremap = true })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { noremap = true })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { noremap = true })
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { noremap = true })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { noremap = true })
-
--- Configure diagnostic display settings
-vim.diagnostic.config({
-  virtual_text = true,
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  severity_sort = true,
-})
 
 -- Configure nvim treesitter to install parsers (https://github.com/nvim-treesitter/nvim-treesitter)
 require('nvim-treesitter').install({
