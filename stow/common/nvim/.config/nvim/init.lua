@@ -131,6 +131,13 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { noremap = true })
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { noremap = true })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { noremap = true })
 
+-- Disable telemetry for copilot.vim
+vim.g.copilot_lsp_settings = {
+    telemetry = {
+        telemetryLevel = "off",
+    },
+}
+
 -- Configure nvim treesitter to install parsers (https://github.com/nvim-treesitter/nvim-treesitter)
 require('nvim-treesitter').install({
     'asm',
