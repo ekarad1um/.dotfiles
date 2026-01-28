@@ -22,44 +22,12 @@ vim.api.nvim_set_hl(0, 'TabLineFill', { fg = 'none', bg = '#eeeeee' })
 
 -- Hide command line unless needed
 vim.opt.cmdheight = 0
-vim.opt.showcmd = true
-
--- Set netrw lexplore keymap
-vim.keymap.set('n', '<M-e>', vim.cmd.Lexplore, { noremap = true })
-
--- Tab management keymaps
-vim.keymap.set('n', '<M-Tab>', ':tabs<CR>', { noremap = true })
-vim.keymap.set('n', '<M-n>', ':tabnew<CR>', { noremap = true })
-vim.keymap.set('n', '<M-w>', function()
-    if #vim.api.nvim_list_tabpages() == 1 then
-        vim.cmd('quit')
-    else
-        vim.cmd('tabclose')
-    end
-end, { noremap = true })
 
 -- Keymaps to switch to specific tabs
 for i = 1, 9 do
     vim.keymap.set('n', '<M-' .. i .. '>', i .. 'gt', { noremap = true })
 end
 vim.keymap.set('n', '<M-0>', ':tablast<CR>', { noremap = true })
-
--- Remap Emacs-style keybindings command modes
--- Navigation
-vim.keymap.set('c', '<C-a>', '<Home>', { noremap = true })
-vim.keymap.set('c', '<C-e>', '<End>', { noremap = true })
-vim.keymap.set('c', '<C-b>', '<Left>', { noremap = true })
-vim.keymap.set('c', '<C-f>', '<Right>', { noremap = true })
-vim.keymap.set('c', '<C-p>', '<Up>', { noremap = true })
-vim.keymap.set('c', '<C-n>', '<Down>', { noremap = true })
--- Word-wise navigation
-vim.keymap.set('c', '<M-b>', '<C-Left>', { noremap = true })
-vim.keymap.set('c', '<M-f>', '<C-Right>', { noremap = true })
--- Killing and deleting
-vim.keymap.set('c', '<C-k>', '<C-u>', { noremap = true })
--- Word-wise deleting
-vim.keymap.set('c', '<M-BS>', '<C-w>', { noremap = true })
-vim.keymap.set('c', '<M-d>', '<C-w>', { noremap = true })
 
 -- Auto close lsp document symbol window after jump
 local symbol_group = vim.api.nvim_create_augroup("LspSymbolWindow", { clear = true })
@@ -74,14 +42,18 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
--- Terminal mode keymaps
-vim.keymap.set('n', '<M-t>', ':vsp|term<CR>', { noremap = true })
-vim.keymap.set('t', '<M-w>', [[<C-\><C-n>:q!<CR>]], { noremap = true })
-vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { noremap = true })
-vim.keymap.set('t', '<C-h>', [[<C-\><C-n><C-w>h]], { noremap = true })
-vim.keymap.set('t', '<C-j>', [[<C-\><C-n><C-w>j]], { noremap = true })
-vim.keymap.set('t', '<C-k>', [[<C-\><C-n><C-w>k]], { noremap = true })
-vim.keymap.set('t', '<C-l>', [[<C-\><C-n><C-w>l]], { noremap = true })
+-- Hex mode toggle keymap
+vim.keymap.set("n", "<leader>h", function()
+  if vim.b.is_hex then
+    vim.cmd("%!xxd -r")
+    vim.b.is_hex = false
+    vim.opt_local.binary = false
+  else
+    vim.opt_local.binary = true
+    vim.cmd("%!xxd")
+    vim.b.is_hex = true
+  end
+end, { noremap = true })
 
 -- Auto enter insert mode when opening or switching to a terminal buffer
 local term_group = vim.api.nvim_create_augroup("NeovimTerminal", { clear = true })
@@ -126,21 +98,33 @@ vim.opt.shortmess:append("c")
 vim.opt.completeopt:append("fuzzy")
 
 -- Toggle inlay hints
-vim.keymap.set('n', '<Leader>ih', function()
+vim.keymap.set('n', '<leader>ih', function()
     local is_enabled = vim.lsp.inlay_hint.is_enabled()
     vim.lsp.inlay_hint.enable(not is_enabled)
 end)
 
 -- Rename symbol keymap
-vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, { noremap = true })
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { noremap = true })
 
 -- Format document keymap
-vim.keymap.set('n', '<Leader>f', function()
+vim.keymap.set('n', '<leader>f', function()
     vim.lsp.buf.format({ async = true })
 end, { noremap = true })
 
--- Show diagnostics in a floating window
+-- Show diagnostics keybindings
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { noremap = true })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { noremap = true })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { noremap = true })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { noremap = true })
+
+-- Configure diagnostic display settings
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+})
 
 -- Configure nvim treesitter to install parsers (https://github.com/nvim-treesitter/nvim-treesitter)
 require('nvim-treesitter').install({

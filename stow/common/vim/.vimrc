@@ -29,10 +29,13 @@ autocmd FocusGained,BufEnter * silent! checktime
 " auto-save all files when focus is lost or switching buffers
 autocmd FocusLost * silent! wall
 
+" auto-escape mouse when leaving vim
+autocmd VimLeave * set mouse=
+
 " use W to save file as root
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
-" autohide tab line
+" auto-hide tab line
 set showtabline=1
 
 " set scrolloff when using j/k
@@ -98,30 +101,60 @@ set ai
 set si
 set wrap
 
-" tab management command maps
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <leader>t<leader> :tabnext<cr>
-
 " netrw options
 let g:netrw_altv = 1
 let g:netrw_fastbrowse = 0
 let g:netrw_keepdir = 0
 let g:netrw_liststyle = 3
 
-" clear search highlight
+" newrw keymap
+nnoremap <M-e> :Lexplore<CR>
+
+" tab management keymaps
+nnoremap <leader>tn :tabnew<CR>
+nnoremap <leader>to :tabonly<CR>
+nnoremap <leader>tc :tabclose<CR>
+nnoremap <leader>tl :tablast<CR>
+nnoremap <leader>tf :tabfirst<CR>
+nnoremap <leader>tt :tabnext<CR>
+nnoremap <leader>tp :tabprevious<CR>
+
+" clear search highlight keymap
 nnoremap <silent> <Esc> :nohlsearch<CR>
 
-" tab listing
+" tab management keymaps
 nnoremap <M-Tab> :tabs<CR>
+nnoremap <M-n> :tabnew<CR>
+nnoremap <M-w> :if tabpagenr('$') == 1 \| quit \| else \| tabclose \| endif<CR>
 
 " move selected lines up and down
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+nnoremap <M-j> mz:m .+1<CR>==`z
+nnoremap <M-k> mz:m .-2<CR>==`z
+vnoremap <M-j> :m '>+1<CR>gv=gv`>
+vnoremap <M-k> :m '<-2<CR>gv=gv`<
+
+" command-line mode keymaps
+" navigation
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+" word-wise navigation and deletion
+cnoremap <M-b> <C-Left>
+cnoremap <M-f> <C-Right>
+cnoremap <M-d> <C-Right><Del>
+cnoremap <M-Backspace> <C-Left><C-w>
+
+" terminal mode keymaps
+nnoremap <M-t> :vsp \| term<CR>
+tnoremap <M-w> <C-\><C-n>:q!<CR>
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
 
 " status line style
 function! VisualSelectionSize()
@@ -168,6 +201,3 @@ function! MyTabLabel(n)
   return label
 endfunction
 set tabline=%!MyTabLine()
-
-" auto escape mouse when leaving vim
-autocmd VimLeave * set mouse=
