@@ -145,7 +145,7 @@ cnoremap <C-n> <Down>
 cnoremap <M-b> <C-Left>
 cnoremap <M-f> <C-Right>
 cnoremap <M-d> <C-Right><Del>
-cnoremap <M-Backspace> <C-Left><C-w>
+cnoremap <M-Backspace> <C-w>
 
 " terminal mode keymaps
 nnoremap <M-t> :vsp \| term<CR>
