@@ -75,6 +75,19 @@ vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
     command = "startinsert",
 })
 
+-- Setup mini.icons
+require('mini.icons').setup({
+    style = 'ascii',
+})
+-- Setup mini.pick
+require("mini.pick").setup({
+    options = {
+        content_from_bottom = false,
+        use_cache = true,
+    }
+})
+vim.keymap.set('n', '<M-p>', function() MiniPick.builtin.files({ tool = 'git' }) end, { noremap = true })
+
 -- LSP servers (https://github.com/neovim/nvim-lspconfig)
 vim.lsp.enable({
     'clangd',

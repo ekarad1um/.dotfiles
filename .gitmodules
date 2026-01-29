@@ -1,3 +1,9 @@
+[submodule "stow/common/nvim/.config/nvim/pack/plugins/start/mini.icons"]
+	path = stow/common/nvim/.config/nvim/pack/plugins/start/mini.icons
+	url = https://github.com/nvim-mini/mini.icons
+[submodule "stow/common/nvim/.config/nvim/pack/plugins/start/mini.pick"]
+	path = stow/common/nvim/.config/nvim/pack/plugins/start/mini.pick
+	url = https://github.com/nvim-mini/mini.pick
 [submodule "stow/common/nvim/.config/nvim/pack/github/start/copilot.vim"]
 	path = stow/common/nvim/.config/nvim/pack/github/start/copilot.vim
 	url = https://github.com/github/copilot.vim
