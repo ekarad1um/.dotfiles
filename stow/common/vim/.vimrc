@@ -108,6 +108,7 @@ let g:netrw_keepdir = 0
 let g:netrw_liststyle = 3
 
 " newrw keymap
+inoremap <M-e> <C-\><C-N>:Lexplore<CR>
 nnoremap <M-e> :Lexplore<CR>
 
 " tab management keymaps
@@ -148,7 +149,7 @@ cnoremap <M-d> <C-Right><Del>
 cnoremap <M-Backspace> <C-w>
 
 " terminal mode keymaps
-nnoremap <M-t> :vsp \| term<CR>
+nnoremap <M-t> :sp \| term<CR>
 tnoremap <M-w> <C-\><C-n>:q!<CR>
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-h> <C-\><C-n><C-w>h

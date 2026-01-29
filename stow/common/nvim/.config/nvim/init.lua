@@ -23,6 +23,9 @@ vim.api.nvim_set_hl(0, 'TabLineFill', { fg = 'none', bg = '#eeeeee' })
 -- Hide command line unless needed
 vim.opt.cmdheight = 0
 
+-- Open new splits to the right and below
+vim.opt.splitright = true
+
 -- Keymaps to switch to specific tabs
 for i = 1, 9 do
     vim.keymap.set('n', '<M-' .. i .. '>', i .. 'gt', { noremap = true })
@@ -72,7 +75,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
     command = "startinsert",
 })
 
--- Enable LSP servers (https://github.com/neovim/nvim-lspconfig)
+-- LSP servers (https://github.com/neovim/nvim-lspconfig)
 vim.lsp.enable({
     'clangd',
     'lua_ls',
@@ -80,7 +83,7 @@ vim.lsp.enable({
     'svelte', 'tsgo'
 })
 
--- Enable native autocompletion
+-- LSP native autocompletion
 local completion_group = vim.api.nvim_create_augroup("LspCompletion", { clear = true })
 vim.api.nvim_create_autocmd("LspAttach", {
     group = completion_group,
@@ -97,21 +100,40 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.shortmess:append("c")
 vim.opt.completeopt:append("fuzzy")
 
--- Toggle inlay hints
+-- LSP symbol navigation keymaps
+vim.keymap.set('n', '<leader>ds', function()
+    vim.lsp.buf.document_symbol({
+        on_list = function(options)
+          local items = {}
+          for _, item in ipairs(options.items) do
+            local kind = item.kind
+            if kind == 'Function' or kind == 'Method' or kind == 'Class' or kind == 'Struct' then
+              table.insert(items, item)
+            end
+          end
+          if #items == 0 then items = options.items end
+          vim.fn.setloclist(0, items, 'r')
+          vim.cmd("lopen")
+        end
+      })
+end, { noremap = true })
+vim.keymap.set('n', '<leader>ws', vim.lsp.buf.workspace_symbol, { noremap = true })
+
+-- LSP inlay hints toggle keymap
 vim.keymap.set('n', '<leader>ih', function()
     local is_enabled = vim.lsp.inlay_hint.is_enabled()
     vim.lsp.inlay_hint.enable(not is_enabled)
 end)
 
--- Rename symbol keymap
+-- LSP rename symbol keymap
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { noremap = true })
 
--- Format document keymap
+-- LSP format document keymap
 vim.keymap.set('n', '<leader>f', function()
     vim.lsp.buf.format({ async = true })
 end, { noremap = true })
 
--- Configure diagnostic display settings
+-- Diagnostic display settings
 vim.diagnostic.config({
     virtual_text = true,
     signs = true,
@@ -120,7 +142,7 @@ vim.diagnostic.config({
     severity_sort = true,
 })
 
--- Show diagnostics keybindings
+-- Diagnostic keymaps
 vim.keymap.set("n", "<leader>d", function()
     local current_config = vim.diagnostic.config() or {}
     local new_state = not (current_config.virtual_text ~= false)
