@@ -117,18 +117,18 @@ vim.opt.completeopt:append("fuzzy")
 vim.keymap.set('n', '<leader>ds', function()
     vim.lsp.buf.document_symbol({
         on_list = function(options)
-          local items = {}
-          for _, item in ipairs(options.items) do
-            local kind = item.kind
-            if kind == 'Function' or kind == 'Method' or kind == 'Class' or kind == 'Struct' then
-              table.insert(items, item)
+            local items = {}
+            for _, item in ipairs(options.items) do
+                local kind = item.kind
+                if kind == 'Function' or kind == 'Method' or kind == 'Class' or kind == 'Struct' then
+                    table.insert(items, item)
+                end
             end
-          end
-          if #items == 0 then items = options.items end
-          vim.fn.setloclist(0, items, 'r')
-          vim.cmd("lopen")
+            if #items == 0 then items = options.items end
+            vim.fn.setloclist(0, items, 'r')
+            vim.cmd("lopen")
         end
-      })
+    })
 end, { noremap = true })
 vim.keymap.set('n', '<leader>ws', vim.lsp.buf.workspace_symbol, { noremap = true })
 
