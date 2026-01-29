@@ -86,7 +86,7 @@ require("mini.pick").setup({
         use_cache = true,
     }
 })
-vim.keymap.set('n', '<M-p>', function() MiniPick.builtin.files({ tool = 'git' }) end, { noremap = true })
+vim.keymap.set('n', '<M-p>', function() MiniPick.builtin.files() end, { noremap = true })
 
 -- LSP servers (https://github.com/neovim/nvim-lspconfig)
 vim.lsp.enable({
