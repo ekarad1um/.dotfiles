@@ -19,6 +19,9 @@ if command -v "brew" > /dev/null 2>&1; then
   export LDFLAGS="-L${__BREW_PREFIX}/opt/llvm/lib"
   export CPPFLAGS="-I${__BREW_PREFIX}/opt/llvm/include"
 
+  # container configuration
+  export PATH="${__BREW_PREFIX}/opt/container/bin:$PATH"
+
   # load zsh-completions
   ZSH_DISABLE_COMPFIX=true
   FPATH="${__BREW_PREFIX}/share/zsh-completions:$HOME/.zshrc.d/completions:$FPATH"
