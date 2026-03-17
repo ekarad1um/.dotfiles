@@ -19,7 +19,7 @@ do_setup() {
 container system start
 container system status
 
-if command -v "zsh" > /dev/null 2>&1; then
+if command -v zsh > /dev/null 2>&1; then
   echo "Generating container zsh completion script..."
   container --generate-completion-script zsh > "$HOME/.zshrc.d/completions/_container"
 fi

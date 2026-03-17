@@ -6,16 +6,18 @@ ff() {
   find . -type f -iname "*$1*"
 }
 
-fd() {
+_fd() {
   find . -type d -iname "*$1*"
 }
+alias fd='_fd'
 
 ffp() {
   find "$1" -type f -iname "*$2*"
 }
 
-fdgrep() {
+_fgrep() {
   local search_pattern="$1"
   local file_pattern="${2:-*}"
   find . -type f -name "$file_pattern" -exec grep -H -n -i "$search_pattern" {} +
 }
+alias fgrep='_fgrep'

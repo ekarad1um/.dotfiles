@@ -59,7 +59,7 @@ if [[ -d "$HOME/.rc.d" ]]; then
 fi
 
 # start a tmux session if not already inside one
-if command -v "tmux" > /dev/null 2>&1 && [[ -z "$SSH_CONNECTION" ]] && [[ ! "$TERM_PROGRAM" =~ "(vscode|zed)" ]]; then
+if command -v tmux > /dev/null 2>&1 && [[ -z "$SSH_CONNECTION" ]] && [[ ! "$TERM_PROGRAM" =~ "(vscode|zed)" ]]; then
   if ! tmux has-session; then
     tmux
   elif [ -z "$TMUX" ]; then

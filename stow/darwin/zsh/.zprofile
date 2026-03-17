@@ -6,7 +6,7 @@ if [[ -f "$HOME/.cargo/env" ]]; then
 fi
 
 # brew packages configuration
-if command -v "brew" > /dev/null 2>&1; then
+if command -v brew > /dev/null 2>&1; then
 
   # brew environment variables
   export HOMEBREW_NO_ANALYTICS=1
